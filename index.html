@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookGuru - Cari dan Pesan Guru Privat Terbaik</title>
+    <!-- FontAwesome CDN for modern vector icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Desktop Mode View Switcher -->
+        <div class="view-toggle">
+            <button id="btn-phone-mode" class="active"><i class="fa-solid fa-mobile-screen-button"></i> Mode HP (iPhone 17 Pro Max)</button>
+            <button id="btn-fullscreen-mode"><i class="fa-solid fa-expand"></i> Mode Layar Penuh</button>
+        </div>
+
+        <!-- Phone Frame Simulation -->
+        <div class="phone-frame" id="phone-frame">
+            <!-- Dynamic Island -->
+            <div class="dynamic-island" id="dynamic-island">
+                <i class="fa-solid fa-graduation-cap" style="color: #3b82f6;"></i>
+                <span style="font-weight: 700; color: #ffffff;" id="island-text">BookGuru</span>
+                <i class="fa-solid fa-circle" style="font-size: 5px; color: #3b82f6;"></i>
+            </div>
+
+            <!-- iOS Status Bar -->
+            <div class="status-bar" id="status-bar">
+                <span id="status-bar-time">19:30</span>
+                <div class="status-icons">
+                    <i class="fa-solid fa-signal"></i>
+                    <i class="fa-solid fa-wifi"></i>
+                    <i class="fa-solid fa-battery-three-quarters"></i>
+                </div>
+            </div>
+
+            <!-- App Viewport -->
+            <div class="app-screen">
+                
+                <!-- Custom Alert Banner -->
+                <div id="custom-alert" class="custom-alert">
+                    <i id="alert-icon" class="fa-solid"></i>
+                    <span id="alert-text">Notifikasi</span>
+                </div>
+
+                <!-- Screen Contents Scrollable Viewports -->
+                <div class="screen-views" id="screen-views">
+
+                    <!-- ================= TAB 1: BERANDA ================= -->
+                    <section id="screen-beranda" class="screen active">
+                        <div class="app-header-gradient">
+                            <div class="header-user-row">
+                                <div class="user-welcome-text">
+                                    <p>Selamat datang,</p>
+                                    <h2 id="header-user-name">Aisyah Putri</h2>
+                                </div>
+                                <button class="user-avatar-btn" id="btn-go-profile">
+                                    <img id="header-user-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150" alt="Profil">
+                                </button>
+                            </div>
+                            <div class="header-search-bar">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="home-search-input" placeholder="Cari mata pelajaran atau guru...">
+                            </div>
+                        </div>
+
+                        <!-- Active Bookings Tracker Container -->
+                        <div class="section-padding" style="padding-bottom: 5px;">
+                            <div class="section-title-row">
+                                <h3 class="section-title">Proses Booking Aktif</h3>
+                            </div>
+                            <div id="active-booking-container">
+                                <!-- Dynamic dynamic loading or placeholder will be handled in app.js -->
+                                <div class="active-booking-card" id="home-active-booking-card">
+                                    <div class="booking-card-left">
+                                        <div class="booking-icon-wrapper">
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                        </div>
+                                        <div class="booking-text-details">
+                                            <h4 id="active-booking-subject">Matematika - Bu Rina</h4>
+                                            <p id="active-booking-time">Hari ini, 15:00 WIB</p>
+                                        </div>
+                                    </div>
+                                    <span class="booking-status-badge" id="active-booking-status" onclick="goToTab('booking')">Menunggu</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Subject Categories section -->
+                        <div class="section-padding" style="padding-top: 15px; padding-bottom: 5px;">
+                            <h3 class="section-title" style="margin-bottom: 14px;">Kategori Mata Pelajaran</h3>
+                            <div class="categories-grid">
+                                <button class="category-btn" data-subject="Matematika">
+                                    <div class="category-icon-box" style="color: #ec4899;">
+                                        <i class="fa-solid fa-ruler-combined"></i>
+                                    </div>
+                                    <span>Matematika</span>
+                                </button>
+                                <button class="category-btn" data-subject="Fisika">
+                                    <div class="category-icon-box" style="color: #6366f1;">
+                                        <i class="fa-solid fa-microscope"></i>
+                                    </div>
+                                    <span>Fisika</span>
+                                </button>
+                                <button class="category-btn" data-subject="B. Inggris">
+                                    <div class="category-icon-box" style="color: #a855f7;">
+                                        <i class="fa-solid fa-comments"></i>
+                                    </div>
+                                    <span>B. Inggris</span>
+                                </button>
+                                <button class="category-btn" data-subject="Kimia">
+                                    <div class="category-icon-box" style="color: #10b981;">
+                                        <i class="fa-solid fa-flask"></i>
+                                    </div>
+                                    <span>Kimia</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Recommendations list -->
+                        <div class="section-padding" style="padding-top: 15px;">
+                            <div class="section-title-row">
+                                <h3 class="section-title">Rekomendasi Guru</h3>
+                                <span class="section-link" onclick="goToTab('cari')">Lihat Semua</span>
+                            </div>
+                        </div>
+                        <div class="horizontal-cards-container" id="recommendations-container">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </section>
+
+
+                    <!-- ================= TAB 2: CARI / KATALOG ================= -->
+                    <section id="screen-cari" class="screen">
+                        <div class="search-header-box">
+                            <div class="search-input-wrapper">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="catalog-search-input" placeholder="Cari nama guru atau mata pelajaran...">
+                            </div>
+                            <div class="filter-pills-row" id="catalog-filter-pills">
+                                <button class="filter-pill active" data-subject="semua">Semua</button>
+                                <button class="filter-pill" data-subject="Matematika">Matematika</button>
+                                <button class="filter-pill" data-subject="Fisika">Fisika</button>
+                                <button class="filter-pill" data-subject="B. Inggris">B. Inggris</button>
+                                <button class="filter-pill" data-subject="Kimia">Kimia</button>
+                            </div>
+                        </div>
+
+                        <!-- Catalog list container -->
+                        <div class="catalog-list" id="catalog-list-container">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </section>
+
+
+                    <!-- ================= TAB 3: BOOKING WIZARD ================= -->
+                    <section id="screen-booking" class="screen">
+                        <div class="screen-header">
+                            <button class="back-btn" onclick="goToTab('cari')"><i class="fa-solid fa-arrow-left"></i></button>
+                            <h2>Form Pemesanan Guru</h2>
+                        </div>
+
+                        <!-- Wizard Steps Progress Bar -->
+                        <div class="booking-steps-nav">
+                            <div class="booking-steps-line">
+                                <div class="booking-steps-progress-line" id="booking-progress-bar"></div>
+                            </div>
+                            <div class="booking-step-item active" id="step-nav-1">
+                                <div class="step-number">1</div>
+                                <span class="step-label-txt">Paket</span>
+                            </div>
+                            <div class="booking-step-item" id="step-nav-2">
+                                <div class="step-number">2</div>
+                                <span class="step-label-txt">Sesi</span>
+                            </div>
+                            <div class="booking-step-item" id="step-nav-3">
+                                <div class="step-number">3</div>
+                                <span class="step-label-txt">Bayar</span>
+                            </div>
+                        </div>
+
+                        <!-- Wizard Views Area -->
+                        <div class="booking-wizard-content">
+
+                            <!-- Step 1 View: Package selection -->
+                            <div class="wizard-step-panel active" id="wizard-panel-1">
+                                <h3 class="section-title">Pilih Paket Belajar</h3>
+                                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top:-8px; margin-bottom: 10px;">
+                                    Sesuaikan kebutuhan belajar Anda dengan paket sesi di bawah ini.
+                                </p>
+                                
+                                <div class="package-selector-group">
+                                    <div class="package-card-option selected" data-multiplier="1" data-pkg-name="Paket Eceran (1 Sesi)">
+                                        <div class="package-option-details">
+                                            <h4>Paket Eceran</h4>
+                                            <p>1 Sesi Pertemuan Langsung</p>
+                                        </div>
+                                        <div class="package-price-row">
+                                            <div class="price">Normal</div>
+                                            <div class="session-cnt">1 Sesi</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="package-card-option" data-multiplier="4.5" data-pkg-name="Paket Mingguan (5 Sesi)">
+                                        <div class="package-option-details">
+                                            <h4>Paket Mingguan</h4>
+                                            <p>5 Sesi Pertemuan (Diskon 10%)</p>
+                                        </div>
+                                        <div class="package-price-row">
+                                            <div class="price">Diskon 10%</div>
+                                            <div class="session-cnt">5 Sesi</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="package-card-option" data-multiplier="8" data-pkg-name="Paket Bulanan (10 Sesi)">
+                                        <div class="package-option-details">
+                                            <h4>Paket Bulanan</h4>
+                                            <p>10 Sesi Pertemuan (Diskon 20%)</p>
+                                        </div>
+                                        <div class="package-price-row">
+                                            <div class="price">Diskon 20%</div>
+                                            <div class="session-cnt">10 Sesi</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 2 View: Date & duration selection -->
+                            <div class="wizard-step-panel" id="wizard-panel-2">
+                                <h3 class="section-title">Detail Waktu & Sesi</h3>
+                                
+                                <div class="input-group-field">
+                                    <label>Guru yang Dipilih</label>
+                                    <input type="text" id="booking-teacher-name-disabled" disabled style="background:#f1f5f9; font-weight:700;">
+                                </div>
+
+                                <div class="input-group-field">
+                                    <label for="booking-date">Pilih Tanggal Mulai</label>
+                                    <input type="date" id="booking-date">
+                                </div>
+
+                                <div class="input-group-field">
+                                    <label for="booking-time">Pilih Jam Mulai</label>
+                                    <select id="booking-time">
+                                        <option value="09:00">09:00 WIB</option>
+                                        <option value="11:00">11:00 WIB</option>
+                                        <option value="13:00">13:00 WIB</option>
+                                        <option value="15:00" selected>15:00 WIB</option>
+                                        <option value="17:00">17:00 WIB</option>
+                                        <option value="19:00">19:00 WIB</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-group-field">
+                                    <label>Durasi per Sesi</label>
+                                    <div class="duration-chips-group">
+                                        <div class="duration-chip selected" data-hours="1">1 Jam</div>
+                                        <div class="duration-chip" data-hours="1.5">1.5 Jam</div>
+                                        <div class="duration-chip" data-hours="2">2 Jam</div>
+                                    </div>
+                                </div>
+
+                                <!-- Dynamic calculations -->
+                                <div class="order-summary-box">
+                                    <div class="summary-item-row">
+                                        <span>Tarif Guru</span>
+                                        <span id="summary-teacher-rate">Rp 100.000 / jam</span>
+                                    </div>
+                                    <div class="summary-item-row">
+                                        <span>Durasi Sesi</span>
+                                        <span id="summary-duration">1 Jam</span>
+                                    </div>
+                                    <div class="summary-item-row">
+                                        <span>Total Sesi (Paket)</span>
+                                        <span id="summary-package-multiplier">1x Sesi</span>
+                                    </div>
+                                    <div class="summary-item-row total-bold">
+                                        <span>Total Pembayaran</span>
+                                        <span class="price" id="summary-grand-total">Rp 100.000</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 3 View: Payment method selections -->
+                            <div class="wizard-step-panel" id="wizard-panel-3">
+                                <h3 class="section-title">Pilih Metode Pembayaran</h3>
+                                
+                                <div class="payment-selector-group">
+                                    <div class="pay-card-option selected" data-method="qris">
+                                        <div class="pay-icon-circle">
+                                            <i class="fa-solid fa-qrcode"></i>
+                                        </div>
+                                        <div class="pay-details-lbl">
+                                            <h4>QRIS - Pembayaran Instan</h4>
+                                            <p>Scan otomatis dengan dompet digital / e-wallet</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="pay-card-option" data-method="bank">
+                                        <div class="pay-icon-circle">
+                                            <i class="fa-solid fa-building-columns"></i>
+                                        </div>
+                                        <div class="pay-details-lbl">
+                                            <h4>Bank Transfer (Virtual Account)</h4>
+                                            <p>Transfer manual via Bank BCA/Mandiri/BNI</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="order-summary-box" style="margin-top: 15px;">
+                                    <div class="summary-item-row">
+                                        <span>Total Pembayaran</span>
+                                        <span id="payment-summary-total" style="font-weight: 700;">Rp 100.000</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 4 View: Checkout details (QRIS screen or Bank code) -->
+                            <div class="wizard-step-panel" id="wizard-panel-4">
+                                <h3 class="section-title" id="checkout-panel-title">Selesaikan Pembayaran</h3>
+                                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: -8px;" id="checkout-panel-desc">
+                                    Silakan lakukan pembayaran sesuai instruksi di bawah ini.
+                                </p>
+
+                                <div id="checkout-qris-area" class="qris-container-box">
+                                    <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted);">SCAN QRIS UNTUK BAYAR</span>
+                                    <!-- Embedded generated SVG Mockup QR image or direct SVG -->
+                                    <img class="qris-code-img" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=BookGuru-Payment-Simulated" alt="QRIS Code">
+                                    <p style="font-size:0.75rem; color:var(--primary); font-weight:700; margin:0;">
+                                        <i class="fa-solid fa-hourglass-start animate-spin"></i> Menunggu pembayaran otomatis...
+                                    </p>
+                                </div>
+
+                                <div id="checkout-bank-area" style="display: none; flex-direction:column; gap:16px;">
+                                    <div class="bank-va-box">
+                                        <div class="va-details">
+                                            <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600; display:block; margin-bottom:4px;">VIRTUAL ACCOUNT NUMBER</span>
+                                            <span class="va-code-row" id="va-number-lbl">8273 0812 3456 7890</span>
+                                        </div>
+                                        <button class="va-copy-btn" id="btn-copy-va" onclick="copyVaNumber()"><i class="fa-regular fa-copy"></i> Salin</button>
+                                    </div>
+                                    <div style="background:#ffffff; border-radius: var(--radius-md); padding:16px; border:1px solid var(--border-color); font-size:0.8rem;">
+                                        <h4 style="margin-bottom:8px; font-weight:700;">Cara Pembayaran:</h4>
+                                        <ol style="margin-left: 16px; display:flex; flex-direction:column; gap:6px; color: var(--text-muted);">
+                                            <li>Salin Nomor Virtual Account di atas.</li>
+                                            <li>Buka m-Banking Anda, pilih Transfer ke Virtual Account.</li>
+                                            <li>Masukkan kode VA, pastikan nominal pembayaran sesuai.</li>
+                                            <li>Masukkan PIN Anda untuk memproses.</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 5 View: Payment Done Screen -->
+                            <div class="wizard-step-panel" id="wizard-panel-success">
+                                <div class="success-screen-panel">
+                                    <div class="success-icon-wrapper">
+                                        <i class="fa-solid fa-check"></i>
+                                    </div>
+                                    <h2>Pembayaran Berhasil!</h2>
+                                    <p>Terima kasih. Pesanan tutor Anda sudah terkonfirmasi di sistem.</p>
+                                    
+                                    <div class="success-receipt-details">
+                                        <div class="receipt-row-item">
+                                            <span class="lbl">ID Transaksi</span>
+                                            <span class="val" id="receipt-tx-id">TX-BG-89327</span>
+                                        </div>
+                                        <div class="receipt-row-item">
+                                            <span class="lbl">Guru Privat</span>
+                                            <span class="val" id="receipt-teacher-name">Bu Rina, S.Pd</span>
+                                        </div>
+                                        <div class="receipt-row-item">
+                                            <span class="lbl">Jadwal Sesi</span>
+                                            <span class="val" id="receipt-session-schedule">Besok, 15:00 WIB</span>
+                                        </div>
+                                        <div class="receipt-row-item">
+                                            <span class="lbl">Total Bayar</span>
+                                            <span class="val" id="receipt-total-amount">Rp 100.000</span>
+                                        </div>
+                                        <div class="receipt-row-item">
+                                            <span class="lbl">Status</span>
+                                            <span class="val" style="color:var(--success);">Sudah Lunas</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Wizard Footer Actions -->
+                        <div class="wizard-footer-buttons" id="wizard-btn-container">
+                            <button class="wizard-btn-prev" id="btn-wizard-prev">Kembali</button>
+                            <button class="wizard-btn-next" id="btn-wizard-next">Lanjutkan</button>
+                        </div>
+                    </section>
+
+
+                    <!-- ================= TAB 4: SYSTEM CHAT ================= -->
+                    <section id="screen-chat" class="screen">
+                        <div class="screen-header">
+                            <h2>Konsultasi Guru</h2>
+                        </div>
+                        
+                        <div class="chat-layout">
+                            <!-- Rooms View -->
+                            <div class="chat-rooms-list" id="chat-rooms-container">
+                                <!-- Dynamically generated active chats list -->
+                            </div>
+
+                            <!-- Inside Conversation Pane -->
+                            <div class="chat-window-pane" id="chat-conversation-window">
+                                <div class="chat-window-header">
+                                    <button class="back-btn" id="btn-back-to-rooms"><i class="fa-solid fa-chevron-left"></i></button>
+                                    <div class="chat-header-profile">
+                                        <div class="chat-header-avatar">
+                                            <img id="chat-current-avatar" src="" alt="Avatar">
+                                        </div>
+                                        <div class="chat-header-details">
+                                            <h3 id="chat-current-name">Bu Rina, S.Pd</h3>
+                                            <p id="chat-current-status">Online</p>
+                                        </div>
+                                    </div>
+                                    <!-- Attachment triggers -->
+                                    <button class="back-btn" id="btn-call-teacher" style="font-size:1.15rem;"><i class="fa-solid fa-phone"></i></button>
+                                </div>
+
+                                <!-- Messages History Scroll Container -->
+                                <div class="chat-window-messages" id="chat-messages-container">
+                                    <!-- Filled via JS -->
+                                </div>
+
+                                <!-- Chat Input Box Bar -->
+                                <div class="chat-window-input-bar">
+                                    <!-- Simulated file input -->
+                                    <input type="file" id="chat-file-uploader" style="display: none;">
+                                    <button class="chat-btn-attach" id="btn-trigger-upload" title="Unggah dokumen/foto">
+                                        <i class="fa-solid fa-paperclip"></i>
+                                    </button>
+                                    <input type="text" id="chat-message-input" placeholder="Tulis pesan konsultasi...">
+                                    <button class="chat-btn-send" id="btn-chat-send">
+                                        <i class="fa-solid fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <!-- ================= TAB 5: AKUN / USER DASHBOARD ================= -->
+                    <section id="screen-akun" class="screen">
+                        <!-- Upper Banner/Avatar section -->
+                        <div class="account-hero">
+                            <div class="account-avatar-wrapper" id="btn-change-avatar">
+                                <img id="dashboard-user-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150" alt="Avatar">
+                                <div class="edit-avatar-icon">GANTI</div>
+                            </div>
+                            <h2 id="dashboard-user-name">Aisyah Putri</h2>
+                            <p id="dashboard-user-bio">Pelajar SMA | Suka Matematika & Fisika</p>
+                        </div>
+
+                        <!-- Statistics display row -->
+                        <div class="profile-stats-card-box">
+                            <div class="stat-item-box">
+                                <span class="val" id="stats-total-hours">12 Jam</span>
+                                <span class="lbl">Jam Belajar</span>
+                            </div>
+                            <div class="stat-item-box">
+                                <span class="val" id="stats-total-bookings">3</span>
+                                <span class="lbl">Total Booking</span>
+                            </div>
+                            <div class="stat-item-box">
+                                <span class="val" style="color: var(--accent);">
+                                    <i class="fa-solid fa-coins"></i> 150
+                                </span>
+                                <span class="lbl">Guru Coins</span>
+                            </div>
+                        </div>
+
+                        <!-- Navigation items listing -->
+                        <div class="menu-group-list">
+                            <div class="menu-item-link" id="btn-menu-edit-profile">
+                                <div class="menu-item-left">
+                                    <i class="fa-regular fa-user"></i>
+                                    <span>Pengaturan Profil</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right" style="color:var(--text-muted); font-size:0.8rem;"></i>
+                            </div>
+
+                            <div class="menu-item-link" id="btn-menu-history">
+                                <div class="menu-item-left">
+                                    <i class="fa-solid fa-clock-rotate-left"></i>
+                                    <span>Riwayat Pemesanan</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right" style="color:var(--text-muted); font-size:0.8rem;"></i>
+                            </div>
+
+                            <div class="menu-item-link" id="btn-menu-payments">
+                                <div class="menu-item-left">
+                                    <i class="fa-solid fa-wallet"></i>
+                                    <span>Status Transaksi</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right" style="color:var(--text-muted); font-size:0.8rem;"></i>
+                            </div>
+                        </div>
+
+                        <!-- Account Inner Sliding Pages (Edit Profile, Booking History, Transactions) -->
+                        
+                        <!-- Panel: Edit Profile -->
+                        <div class="dashboard-detail-pane" id="pane-edit-profile">
+                            <div class="screen-header">
+                                <button class="back-btn pane-close-btn"><i class="fa-solid fa-arrow-left"></i></button>
+                                <h2>Pengaturan Profil</h2>
+                            </div>
+                            <div class="dashboard-pane-content">
+                                <form id="form-edit-profile" class="profile-edit-form" onsubmit="event.preventDefault();">
+                                    <div class="input-group-field">
+                                        <label for="input-prof-name">Nama Lengkap</label>
+                                        <input type="text" id="input-prof-name" value="Aisyah Putri" required>
+                                    </div>
+                                    <div class="input-group-field">
+                                        <label for="input-prof-bio">Bio singkat</label>
+                                        <input type="text" id="input-prof-bio" value="Pelajar SMA | Suka Matematika & Fisika">
+                                    </div>
+                                    <div class="input-group-field">
+                                        <label for="input-prof-email">Email</label>
+                                        <input type="email" id="input-prof-email" value="aisyah.putri@email.com" required>
+                                    </div>
+                                    <div class="input-group-field">
+                                        <label for="input-prof-phone">Nomor HP</label>
+                                        <input type="text" id="input-prof-phone" value="081234567890">
+                                    </div>
+                                    <button type="submit" class="profile-submit-btn" id="btn-save-profile">Simpan Perubahan</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Panel: Booking History -->
+                        <div class="dashboard-detail-pane" id="pane-booking-history">
+                            <div class="screen-header">
+                                <button class="back-btn pane-close-btn"><i class="fa-solid fa-arrow-left"></i></button>
+                                <h2>Riwayat Pemesanan</h2>
+                            </div>
+                            <div class="dashboard-pane-content" id="booking-history-list">
+                                <!-- Populated dynamically by app.js -->
+                            </div>
+                        </div>
+
+                        <!-- Panel: Transaction Status -->
+                        <div class="dashboard-detail-pane" id="pane-transaction-status">
+                            <div class="screen-header">
+                                <button class="back-btn pane-close-btn"><i class="fa-solid fa-arrow-left"></i></button>
+                                <h2>Status Transaksi</h2>
+                            </div>
+                            <div class="dashboard-pane-content" id="transaction-history-list">
+                                <!-- Populated dynamically by app.js -->
+                            </div>
+                        </div>
+                    </section>
+
+                </div> <!-- .screen-views -->
+
+                <!-- Navigation Tabs Bar -->
+                <nav class="bottom-nav">
+                    <button class="nav-item active" data-tab="beranda">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Beranda</span>
+                    </button>
+                    <button class="nav-item" data-tab="cari">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>Cari</span>
+                    </button>
+                    <button class="nav-item" data-tab="booking">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        <span>Booking</span>
+                    </button>
+                    <button class="nav-item" data-tab="chat">
+                        <i class="fa-solid fa-comment-dots"></i>
+                        <span class="nav-badge" id="chat-notification-badge"></span>
+                        <span>Chat</span>
+                    </button>
+                    <button class="nav-item" data-tab="akun">
+                        <i class="fa-solid fa-circle-user"></i>
+                        <span>Akun</span>
+                    </button>
+                </nav>
+
+            </div> <!-- .app-screen -->
+
+            <!-- Details Slide-Up Modal Drawer (Inside the phone frame viewport to clip properly) -->
+            <div class="detail-modal-overlay" id="detail-modal-overlay">
+                <div class="detail-modal-sheet" id="detail-modal-sheet">
+                    <div class="detail-sheet-handle"></div>
+                    <div class="detail-sheet-body">
+                        
+                        <div class="teacher-detail-header">
+                            <div class="detail-avatar-box">
+                                <img id="detail-teacher-avatar" src="" alt="Avatar">
+                            </div>
+                            <div class="detail-title-info">
+                                <h3 id="detail-teacher-name">Nama Guru</h3>
+                                <span class="tag-subject" id="detail-teacher-subject">Mata Pelajaran</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-ratings-row">
+                            <div class="rating-column-item">
+                                <span class="label">Peringkat</span>
+                                <span class="val" id="detail-teacher-rating">
+                                    <i class="fa-solid fa-star" style="color:var(--accent);"></i> 4.9
+                                </span>
+                            </div>
+                            <div class="rating-column-item" style="border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color);">
+                                <span class="label">Tarif Jasa</span>
+                                <span class="val" id="detail-teacher-price">Rp 100k/jam</span>
+                            </div>
+                            <div class="rating-column-item">
+                                <span class="label">Pengalaman</span>
+                                <span class="val" id="detail-teacher-exp">5+ Tahun</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-about-section">
+                            <h4>Tentang Guru</h4>
+                            <p id="detail-teacher-bio">Biografi singkat guru tentang kualifikasi dan pengalaman mengajar mereka...</p>
+                        </div>
+
+                        <div class="detail-footer-btn-row">
+                            <button class="detail-btn-chat" id="btn-detail-chat-trigger" title="Konsultasi Chat">
+                                <i class="fa-regular fa-comment-dots"></i>
+                            </button>
+                            <button class="detail-btn-action" id="btn-detail-booking-trigger">Booking Sekarang</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- .phone-frame -->
+    </div> <!-- .app-container -->
+
+    <!-- Load JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
