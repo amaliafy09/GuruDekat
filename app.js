@@ -18,6 +18,7 @@ const TUTORS = [
         rating: 4.9,
         rate: 100000,
         experience: '8 Tahun',
+        location: 'Batang, Jawa Tengah',
         avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300',
         bio: 'Dosen Matematika dengan pengalaman mengajar 8 tahun. Ahli dalam membimbing siswa untuk persiapan ujian nasional, olimpiade matematika, kalkulus, dan aljabar tingkat lanjut. Gaya mengajar santai, logis, dan mudah dipahami.',
         reviews: 42
@@ -29,6 +30,7 @@ const TUTORS = [
         rating: 4.8,
         rate: 120000,
         experience: '6 Tahun',
+        location: 'Pekalongan, Jawa Tengah',
         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300',
         bio: 'Guru Fisika SMA Unggulan. Spesialisasi dalam Mekanika, Termodinamika, Fisika Kuantum, dan persiapan UTBK. Menyukai metode eksperimen sederhana agar siswa bisa memvisualisasikan teori fisika di dunia nyata.',
         reviews: 35
@@ -40,6 +42,7 @@ const TUTORS = [
         rating: 4.7,
         rate: 90000,
         experience: '5 Tahun',
+        location: 'Semarang, Jawa Tengah',
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300',
         bio: 'Lulusan Sastra Inggris UGM dengan sertifikasi TOEFL/IELTS tingkat lanjut. Berpengalaman 5 tahun mengajar conversation, grammar, dan penulisan akademik. Sangat ramah dan interaktif dengan murid sekolah.',
         reviews: 29
@@ -51,6 +54,7 @@ const TUTORS = [
         rating: 4.9,
         rate: 110000,
         experience: '7 Tahun',
+        location: 'Batang, Jawa Tengah',
         avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300',
         bio: 'Pakar Kimia Organik dan pelatih Olimpiade Sains Nasional (OSN). Memiliki cara jitu menghafal tabel periodik dan memahami reaksi kimia yang kompleks secara visual dan menyenangkan. Cocok untuk semua tingkatan sekolah.',
         reviews: 38
@@ -551,6 +555,10 @@ function openTeacherDetailModal(teacher) {
     document.getElementById('detail-teacher-avatar').src = teacher.avatar;
     document.getElementById('detail-teacher-name').textContent = teacher.name;
     document.getElementById('detail-teacher-subject').textContent = teacher.subject;
+    document.getElementById('detail-teacher-location').textContent =
+    teacher.location;
+    document.getElementById('detail-teacher-distance').textContent =
+        "Jarak dari Anda : " + teacher.distance;
     document.getElementById('detail-teacher-rating').innerHTML = `<i class="fa-solid fa-star" style="color:var(--accent);"></i> ${teacher.rating}`;
     document.getElementById('detail-teacher-price').textContent = `${formatIDR(teacher.rate)}/jam`;
     document.getElementById('detail-teacher-exp').textContent = teacher.experience;

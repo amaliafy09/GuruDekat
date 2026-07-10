@@ -2053,3 +2053,28 @@ body {
         opacity: 0;
     }
 }
+.teacher-location-box{
+    margin-top:18px;
+    background:#f8fafc;
+    border-radius:16px;
+    padding:16px;
+    border:1px solid #e5e7eb;
+}
+
+.location-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+    font-size:15px;
+    color:#334155;
+}
+
+.location-item:last-child{
+    margin-bottom:0;
+}
+
+.location-item i{
+    color:#2563eb;
+    font-size:17px;
+}
